@@ -8,13 +8,106 @@ GIT will save you!
 
 
 
-# Definitions:
+
+
+# Often used Git commands
+
+
+## To create a new branch
+git checkout -b my_fancy_branch_name
+
+
+
+## To delete a remote branch
+git push origin -d branch-name.
+
+
+
+## To delete a local branch
+git branch -d old-branch.
+
+
+
+## To go back one local commit with files still being ready for commit
+git reset --soft HEAD~1
+If you then want the remote to also go back one commit then 
+git push -f
+
+
+
+## When on feature branch rebase to sync it back up with master
+git pull origin master --rebase
+git push -f
+(If commits have been squashed then simply type “git rebase --continue” until you have skipped all your commits that are in fact in the squashed commit)
+
+
+
+## After pulling from a repo and it says “(new commits)”
+That is because the sub-modules are not automatically pulled when the main one is. Fix this with the command:
+git submodule update --init --recursive
+
+
+
+## To get the diff without having to scroll through it, use -P
+git -P diff <absolute path to file>
+
+
+
+## Look at last commit
+git log --name-status HEAD^..HEAD
+
+
+
+## If you want to save output of a command
+git blame file.name > output.txt
+
+git log -p -- filename > output.txt
+
+
+
+## List all tags
+git tag -l *
+Note that you can modify the wildcard to be more specific.
+
+
+
+## To temporarily hide your changes use
+git stash
+git stash pop
+
+
+
+## show status, but only shows folders that are not tracked
+git status
+
+
+
+## Show status of files not yet tracked 
+git status -u
+
+
+
+## Get a list of all remote branches
+git branch -r
+
+
+
+## To change settings to show the entire command reply instead of using the pager
+git config --global core.pager "cat"
+This is equivalent to starting a command with “git -P”
+
+
+
+
+
+# Definitions
 
 ## Workspace/working tree
 This is all the files and folders you would have if you did not use GIT.
 It is folders, code files, headers, and build system files.
 
 All the good stuff we want to work on.
+
 
 
 ## Repository
@@ -34,11 +127,13 @@ as “The repository”...
 Because we work hard on making life harder and more confusing than it needs to be
 
 
+
 ## index/cache/staging area
 
 A single, large, binary file in the .git folder.
 
-It keeps track of the differences between last time you saved, and how the working tree is now. Every change, every new file, every file deleted.
+It keeps track of the differences between last time you saved, and how the
+working tree is now. Every change, every new file, every file deleted.
 
 
 
