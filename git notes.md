@@ -10,6 +10,37 @@ GIT will save you!
 
 
 
+# Table of Contents
+1. [Often used Git commands](#Often-used-Git-commands)
+    1. [To create a new branch](#To-create-a-new-branch)
+    2. [To delete a remote branch](#To-delete-a-remote-branch)
+    3. [To delete a local branch:](#To-delete-a-local-branch)
+    4. [To go back one local commit, with files still being ready for commit](#To-go-back-one-local-commit-with-files-still-being-ready-for-commit)
+    5. [When on feature branch rebase to sync it back up with master](#When-on-feature-branch-rebase-to-sync-it-back-up-with-master)
+    6. [After pulling from a repo and it says “(new commits)”](#After-pulling-from-a-repo-and-it-says-new-commits)
+    7. [To get the diff without having to scroll through it, use -P](#To-get-the-diff-without-having-to-scroll-through-it-use--P)
+    8. [Look at last commit](#Look-at-last-commit)
+    9. [If you want to save output of a command](#If-you-want-to-save-output-of-a-command)
+    10. [List all tags](#List-all-tags)
+    11. [To temporarily hide your changes use](#To-temporarily-hide-your-changes-use)
+    12. [show status, but only shows folders that are not tracked](#show-status-but-only-shows-folders-that-are-not-tracked)
+    13. [Show status of files not yet tracked ](#Show-status-of-files-not-yet-tracked)
+    14. [Get a list of all remote branches](#Get-a-list-of-all-remote-branches)
+    15. [To change settings to show the entire command reply instead of using the pager](#To-change-settings-to-show-the-entire-command-reply-instead-of-using-the-pager)
+
+
+
+
+
+2. [Definitions](#Definitions)
+    1. [Workspace/working tree](#Workspaceworking-tree)
+    2. [Repository](#Repository)
+    3. [index/cache/staging area](#indexcachestaging-area)
+
+
+
+
+
 # Often used Git commands
 
 
