@@ -123,6 +123,17 @@ This is equivalent to starting a command with “git -P”
 
 
 
+## To see what remote you are pointing to
+git remote -v
+
+
+
+## To change what remote you are pointing to
+git remote set-url origin THE_NEW_ORIGIN
+
+
+
+
 
 # Definitions
 
