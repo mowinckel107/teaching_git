@@ -4,13 +4,26 @@
 
 
 
-TODO:
+# TODO:
 
-Find the definitions again. And get a better understanding of HEAD
-
-
+Make a script
 
 
-git clone --bare /path/to/master/repository
+
+
+
+# Script:
+
+## What is git
+A way to save
+
+
+
+
+the 3 levels:
+commits
+branches
+Remotes/Repositories
+
 
 
