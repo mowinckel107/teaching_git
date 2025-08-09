@@ -17,26 +17,41 @@
     10. [List all tags](#List-all-tags)
     11. [To temporarily hide your changes use](#To-temporarily-hide-your-changes-use)
     12. [show status, but only shows folders that are not tracked](#show-status,-but-only-shows-folders-that-are-not-tracked)
-    13. [Show status of files not yet tracked ](#Show-status-of-files-not-yet-tracked-)
+    13. [Show status of files not yet tracked](#Show-status-of-files-not-yet-tracked)
     14. [Get a list of all remote branches](#Get-a-list-of-all-remote-branches)
     15. [Show the entire command reply instead of using the pager](#Show-the-entire-command-reply-instead-of-using-the-pager)
-2. [Definitions](#Definitions)
+    16. [To see what remote you are pointing to](#To-see-what-remote-you-are-pointing-to)
+    17. [To change what remote you are pointing to](#To-change-what-remote-you-are-pointing-to)
+
+2. [Git help syntax](#Git-help-syntax)
+
+    1. [git commands are written in kebab case](#git-commands-are-written-in-kebab-case)
+    2. [Angle brackets: <> means placeholder text](#Angle-brackets--means-placeholder-text)
+    3. [Dash: -<a-letter> means single letter short form of an argument](#Dash--a-letter-means-single-letter-short-form-of-an-argument)
+    4. [Double dash: --<word-or-words> is the long form of an argument](#Double-dash---word-or-words-is-the-long-form-of-an-argument)
+    5. [Pipe: <option-1> | <option-2> means use either](#Pipe-option-1--option-2-means-use-either)
+    6. [Square brackets: [] means an optional thing](#Square-brackets--means-an-optional-thing)
+
+3. [Git term Definitions](#Git-term-Definitions)
+
     1. [Workspace/working tree](#Workspaceworking-tree)
     2. [Repository](#Repository)
-    3. [index/cache/staging area](#indexcachestaging-area)
+    3. [Index/Cache/Staging area](#IndexCacheStaging-area)
 
 
 
 
 
-When your code is breaking at 2am
-GIT will save you!
+**When your code is breaking at 2am**
+**Git will save you!**
 
-
+/o/
+ O
+||
+__Gitman!__
 
 
 # Often used Git commands
-
 
 ## To create a new branch
 git checkout -b my_fancy_branch_name
@@ -135,7 +150,75 @@ git remote set-url origin THE_NEW_ORIGIN
 
 
 
-# Definitions
+# Git help syntax
+
+ 
+## git commands are written in kebab case
+Meaning replacing spaces with dashes
+so a command might look like this:
+    git my-weird-command
+
+
+## Angle brackets: <> means placeholder text
+so
+    git a-weird-command <path-to-file>
+
+could be called like 
+    git a-weird-command "/home/moose/Desktop/teaching_git/git notes.md"
+
+notice I put the path in quotations because it have 2 spaces.
+This is to avoid git thinkink it is 3 different argument
+
+
+
+## Dash: -<a-letter> means single letter short form of an argument
+For example, the short for for help in the git command is
+git -h
+
+
+
+## Double dash: --<word-or-words> is the long form of an argument
+for example
+git --help
+
+
+
+## Pipe: <option-1> | <option-2> means use either
+so a git command
+    git weirdest-command --create-farbucket | --fill-bucket-with-fart
+
+could be called like this:
+    git weirdest-command --create-farbucket
+or like this:
+    git weirdest-command --fill-bucket-with-fart
+
+
+## Square brackets: [] means an optional thing
+so
+    git weird [<path>] <author>
+could be called
+    git weird moose
+or
+    git weird "/home/moose/Desktop/teaching_git/git notes.md" moose
+
+This can also show up in the argument explanations
+so for example if you write
+    git show -h
+one of the lines looks like this:
+    -q, --[no-]quiet      suppress diff output
+
+meaning you can write
+    git show --quiet
+to run the command quiet
+or
+    git show --no-quiet
+to run the command NOT quiet :3
+
+
+
+
+
+# Git term Definitions
 
 ## Workspace/working tree
 This is all the files and folders you would have if you did not use GIT.
