@@ -27,5 +27,7 @@ definitions
 help syntax
 
 Hands on with human readable text
-
-
+visualization
+git log
+gitk
+ungit
