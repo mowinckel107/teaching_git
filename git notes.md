@@ -215,7 +215,16 @@ or
 to run the command NOT quiet :3
 
 
-
+## double dashes alone: [--] means done with options
+This is to fix when it is not possible for git to distinguish when the options are done
+and the following arguments start.
+so if you have (for some reason) named a file "main" and you have a branch called "main"
+now you want to revert changes to that file and call
+    git checkout main
+git... now defaults to switching to the branch main
+so if you want to revert the changes you call it like this
+    git checkout -- main
+and it works! :D
 
 
 # Git term Definitions
