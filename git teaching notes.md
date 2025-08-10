@@ -6,7 +6,14 @@
 
 # TODO:
 
-Make a script
+Find a shared doodle board app and place it in the Tools section
+
+
+
+
+
+# Tools:
+Have a shared doodle board app!
 
 
 
@@ -26,8 +33,33 @@ The git notes
 definitions
 help syntax
 
-Hands on with human readable text
 visualization
-git log
+git log --graph
 gitk
 ungit
+
+
+
+Hands on with human readable text
+
+use local repositories
+have the origin
+have 2 cloned repositories
+have a console for each of them
+have a text editor open for each of them
+
+keep using git log --graph to show the different consoles views
+
+
+Do:
+Merge conflicts and how to solve them
+
+change commits and force push with:
+    git reset --soft HEAD~1
+
+Rebase from origin with:
+    git merge --ff-only <your-development-branch-name>
+
+Rebase from development branch
+    git pull origin master --rebase
+
