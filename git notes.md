@@ -229,14 +229,6 @@ and it works! :D
 
 # Git term Definitions
 
-## Workspace/working tree
-This is all the files and folders you would have if you did not use GIT.
-It is folders, code files, headers, and build system files.
-
-All the good stuff we want to work on.
-
-
-
 ## Repository
 
 This is technically the hidden folder called “.git”.
@@ -252,6 +244,14 @@ Just know they are here
 as “The repository”...
 
 Because we work hard on making life harder and more confusing than it needs to be
+
+
+
+## Workspace/working tree
+This is all the files and folders you would have if you did not use GIT.
+It is folders, code files, headers, and build system files.
+
+All the good stuff we want to work on.
 
 
 
