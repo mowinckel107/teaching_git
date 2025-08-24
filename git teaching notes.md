@@ -9,9 +9,6 @@
 Find a shared doodle board app and place it in the Tools section
 
 
-
-
-
 # Tools:
 Have a shared doodle board app!
 
