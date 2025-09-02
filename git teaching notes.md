@@ -8,6 +8,16 @@
 
 Find a shared doodle board app and place it in the Tools section
 
+prepare:
+read terms for them
+git reset -h
+now they should be able to answer. What does the following command do?
+git reset --soft HEAD~1
+
+
+Make a python nonsense commit makers
+One that simply adds a paragraph
+One that finds a paragraph, and then changes part of it
 
 # Tools:
 Have a shared doodle board app!

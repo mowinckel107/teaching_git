@@ -53,7 +53,6 @@
 
 
 
-
 **When your code is breaking at 2am**
 **Git will save you!**
 
@@ -63,7 +62,55 @@
 __Gitman!__
 
 
+
+# Senarios:
+
+1: What have I changed?
+2: When did this happen?
+3: Who did this?
+4: Why is this like this?
+
+
+# git working with paths longer than 260 characters on windows
+Yes... we are doing this
+So windows USED to have a 260 character path limit when using the windows API
+Some programs use the old api. Git often being one of them
+
+2 things need to be done to fix it.
+First thing is to set the register to allow it
+in powershell, run this:
+
+# Check LongPathsEnabled settings
+Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled
+
+# If 0, set it to 1 - This is a System wide configuration
+# This will fail if you do not have Admin priveleges
+# Changes to CurrentControlSet\Control take effect after a system restart
+$MyPSexe = Get-Process -PID $PID | % Path
+Start-Process -Verb RunAs $MyPSexe "-c","Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Type DWord -Value 1"
+
+Second thing is to set git to use it
+in powershell, run this:
+Start-Process -Verb RunAs "git" "config","--system","core.longpaths","true"
+
+
 # Often used Git commands
+
+## Clone into differently named folder
+git clone <git-repo.git> <fancy-new-folder>
+
+
+
+## To highlight words instead of lines with diff
+use
+git diff --word-diff <The-file>
+
+
+
+## Compare a file between 2 commits
+git diff <commit-id-1> <commit-id-2> <file-you-want-to-compare>
+
+
 
 ## To create a new branch
 git checkout -b my_fancy_branch_name
@@ -91,6 +138,21 @@ git push -f
 git pull origin master --rebase
 git push -f
 (If commits have been squashed then simply type “git rebase --continue” until you have skipped all your commits that are in fact in the squashed commit)
+
+
+## Find when file was added
+git log --diff-filter=A -- <your-file.txt>
+
+## Restore empty working tree:
+git commit -m'for now'
+git checkout -f
+git reset --soft HEAD~1
+
+
+
+## git cannot detect changes in file names between high and low case
+You poke git to detect it with
+git mv <Source> <Destination> 
 
 
 
@@ -133,6 +195,11 @@ Note that you can modify the wildcard to be more specific.
 git stash
 git stash pop
 
+# Interact with git stash'es
+To see all saved stashes:
+git stash list
+To delete all saved stashes
+git stash clear
 
 
 ## show status, but only shows folders that are not tracked
@@ -292,6 +359,21 @@ git status
 
 
 
+# Merge conflicts tips
+
+Git considers files that are in the middle of being merged as being staged
+this means if you want to not accept incoming changes you can use
+git restore --staged YOUR_FILE
+to get rid of that file. Because git restore will not work.
+
+
+
+
+
+
+
+
+
 # Basic workflow
 
 This is a basic workflow you can copy.
@@ -314,13 +396,13 @@ Repeat for all files you want added to the commit
     git commit -m "<message-explaining-why-you-made-these-changes>"
 Repeat this entire step for as many times as it take for you to develop your thing
 
+
+
 ## Rebase your branch
 
 ### Make sure you have latest origin
     git checkout <branch-you-want-to-update-maybe-master-or-main>
     git pull
-
-
 
 ### Rebase your branch
 
