@@ -424,6 +424,32 @@ git merge --ff-only <your-branch-name>
 
 
 
+# git on windows
+
+## git working with paths longer than 260 characters on windows
+Yes... we are doing this
+So windows USED to have a 260 character path limit when using the windows API
+Some programs use the old api. Git often being one of them
+
+2 things need to be done to fix it.
+First thing is to set the register to allow it
+Second thing is to tell git that it needs to use this option.
+I am informed that the reason this is off by default is that it can break things.
+I have yet to see anyhting break, but now you know.
+
+To do the two things, open a powershell with admin rights and run this:
+
+Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled
+
+
+$MyPSexe = Get-Process -PID $PID | % Path
+Start-Process -Verb RunAs $MyPSexe "-c","Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Type DWord -Value 1"
+
+Second thing is to set git to use it
+in powershell, run this:
+Start-Process -Verb RunAs "git" "config","--system","core.longpaths","true"
+
+
 
 
 # github
