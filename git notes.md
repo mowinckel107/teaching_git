@@ -71,28 +71,6 @@ __Gitman!__
 4: Why is this like this?
 
 
-# git working with paths longer than 260 characters on windows
-Yes... we are doing this
-So windows USED to have a 260 character path limit when using the windows API
-Some programs use the old api. Git often being one of them
-
-2 things need to be done to fix it.
-First thing is to set the register to allow it
-in powershell, run this:
-
-# Check LongPathsEnabled settings
-Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled
-
-# If 0, set it to 1 - This is a System wide configuration
-# This will fail if you do not have Admin priveleges
-# Changes to CurrentControlSet\Control take effect after a system restart
-$MyPSexe = Get-Process -PID $PID | % Path
-Start-Process -Verb RunAs $MyPSexe "-c","Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Type DWord -Value 1"
-
-Second thing is to set git to use it
-in powershell, run this:
-Start-Process -Verb RunAs "git" "config","--system","core.longpaths","true"
-
 
 # Often used Git commands
 
@@ -439,3 +417,92 @@ git checkout <branch-you-want-to-update-maybe-master-or-main>
 git merge --ff-only <your-branch-name>
 
 
+
+
+
+
+
+
+
+
+
+# github
+
+Now, how to test that your everything works.
+When you have a shell in a git repository folder you can type
+git remote -v
+This will show you the remotes you are pointing to.
+Notice that these are the commands that requires authentication.
+These will be "fetch" and "push"
+Meaning, to test if everything works without having to modify your repository, you simply call
+git fetch
+
+
+## github on windows
+
+I am... SO sorry...
+But I will help. We will get through this
+
+So. First things first
+
+TODO explain SSH keys
+
+TODO explain how to add keys to github
+
+Now, this is all great, but git cannot find your keys
+Because it does not know where to look for them.
+
+So. 
+
+We go to out user directory.
+C:\Users\<Your user>
+
+Here we create 3 files
+One in the .ssh folder called "config"
+In that one add this:
+
+Host github.com
+ Hostname github.com
+ IdentityFile ~/.ssh/<filename of your PRIVATE SSH key>
+
+Next one straight in the user directory called ".bash_profile"
+Add this to the file:
+
+test -f ~/.profile && . ~/.profile
+test -f ~/.bashrc && . ~/.bashrc
+
+And finally one straight in the user directory called ".bashrc" 
+Where you add 
+
+SSH_ENV="$HOME/.ssh/environment"
+
+function run_ssh_env {
+  . "${SSH_ENV}" > /dev/null
+}
+
+function start_ssh_agent {
+  echo "Initializing new SSH agent..."
+  ssh-agent | sed 's/^echo/#echo/' > "${SSH_ENV}"
+  echo "succeeded"
+  chmod 600 "${SSH_ENV}"
+
+  run_ssh_env;
+
+  ssh-add ~/.ssh/id_ed25519;
+}
+
+if [ -f "${SSH_ENV}" ]; then
+  run_ssh_env;
+  ps -ef | grep ${SSH_AGENT_PID} | grep ssh-agent$ > /dev/null || {
+    start_ssh_agent;
+  }
+else
+  start_ssh_agent;
+fi
+
+
+
+This info was found here: https://gist.github.com/bsara/5c4d90db3016814a3d2fe38d314f9c23
+
+
+Now open up a new console, and git should work.
