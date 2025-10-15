@@ -4,34 +4,26 @@
 
 # Table of Content:
 
-1.  [Senarios](#Senarios)
-2.  [Often used Git commands](#Often-used-Git-commands)
-   1.  [Clone into differently named folder](#Clone-into-differently-named-folder)
-   2.  [To highlight words instead of lines with diff](#To-highlight-words-instead-of-lines-with-diff)
-   3.  [Compare a file between 2 commits](#Compare-a-file-between-2-commits)
-   4.  [To create a new branch](#To-create-a-new-branch)
-   5.  [To delete a remote branch](#To-delete-a-remote-branch)
-   6.  [To delete a local branch](#To-delete-a-local-branch)
-   7.  [To go back one local commit with files still being ready for commit](#To-go-back-one-local-commit-with-files-still-being-ready-for-commit)
-   8.  [When on feature branch rebase to sync it back up with master](#When-on-feature-branch-rebase-to-sync-it-back-up-with-master)
-   9.  [Find when file was added](#Find-when-file-was-added)
-   10. [Restore empty working tree](#Restore-empty-working-tree)
-   11. [git cannot detect changes in file names between high and low case](#git-cannot-detect-changes-in-file-names-between-high-and-low-case)
-   12. [When on master how to merge a branch into master](#When-on-master-how-to-merge-a-branch-into-master)
-   13. [After pulling from a repo and it says “(new commits)”](#After-pulling-from-a-repo-and-it-says-“(new-commits)”)
-   14. [To get the diff without having to scroll through it, use -P](#To-get-the-diff-without-having-to-scroll-through-it,-use--P)
-   15. [Look at last commit](#Look-at-last-commit)
-   16. [If you want to save output of a command](#If-you-want-to-save-output-of-a-command)
-   17. [List all tags](#List-all-tags)
-   18. [To temporarily hide your changes use](#To-temporarily-hide-your-changes-use)
-3.  [Interact with git stash'es](#Interact-with-git-stash'es)
-   1.  [show status, but only shows folders that are not tracked](#show-status,-but-only-shows-folders-that-are-not-tracked)
-   2.  [Show status of files not yet tracked](#Show-status-of-files-not-yet-tracked)
-   3.  [Get a list of all remote branches](#Get-a-list-of-all-remote-branches)
-   4.  [Show the entire command reply instead of using the pager](#Show-the-entire-command-reply-instead-of-using-the-pager)
-   5.  [To see what remote you are pointing to](#To-see-what-remote-you-are-pointing-to)
-   6.  [To change what remote you are pointing to](#To-change-what-remote-you-are-pointing-to)
-4.  [Git help syntax](#Git-help-syntax)
+1.  [Often used Git commands](#Often-used-Git-commands)
+   1.  [git init](#git-init)
+   2.  [git clone](#git-clone)
+   3.  [git status](#git-status)
+   4.  [git reset](#git-reset)
+   5.  [git rebase](#git-rebase)
+   6.  [git merge](#git-merge)
+   7.  [git submodule](#git-submodule)
+   8.  [git diff](#git-diff)
+   9.  [git log](#git-log)
+   10. [git tag](#git-tag)
+   11. [git stash](#git-stash)
+   12. [git branch](#git-branch)
+   13. [git remote](#git-remote)
+   14. [git config](#git-config)
+   15. [Save command output to file](#Save-command-output-to-file)
+2.  [Weird git behavior and how to solve it](#Weird-git-behavior-and-how-to-solve-it)
+   1.  [git cannot detect changes in file names between high and low case](#git-cannot-detect-changes-in-file-names-between-high-and-low-case)
+   2.  [Restore empty working tree](#Restore-empty-working-tree)
+3.  [Git help syntax](#Git-help-syntax)
    1.  [git commands are written in kebab case](#git-commands-are-written-in-kebab-case)
    2.  [Angle brackets: <> means placeholder text](#Angle-brackets--means-placeholder-text)
    3.  [Dash: -<a-letter> means single letter short form of an argument](#Dash--a-letter-means-single-letter-short-form-of-an-argument)
@@ -39,12 +31,12 @@
    5.  [Pipe: <option-1> | <option-2> means use either](#Pipe-option-1--option-2-means-use-either)
    6.  [Square brackets: [] means an optional thing](#Square-brackets--means-an-optional-thing)
    7.  [double dashes alone: [--] means done with options](#double-dashes-alone----means-done-with-options)
-5.  [Git term Definitions](#Git-term-Definitions)
+4.  [Git term Definitions](#Git-term-Definitions)
    1.  [Repository](#Repository)
    2.  [Workspace/working tree](#Workspaceworking-tree)
    3.  [Index/Cache/Staging area](#IndexCacheStaging-area)
-6.  [Merge conflicts tips](#Merge-conflicts-tips)
-7.  [Basic workflow](#Basic-workflow)
+5.  [Merge conflicts tips](#Merge-conflicts-tips)
+6.  [Basic workflow](#Basic-workflow)
    1.  [Create a development branch](#Create-a-development-branch)
    2.  [Develop your thing](#Develop-your-thing)
    3.  [Rebase your branch](#Rebase-your-branch)
@@ -52,14 +44,10 @@
       2.  [Rebase your branch](#Rebase-your-branch)
       3.  [Merge the branches](#Merge-the-branches)
    4.  [Short version](#Short-version)
-8.  [git on windows](#git-on-windows)
+7.  [git on windows](#git-on-windows)
    1.  [git working with paths longer than 260 characters on windows](#git-working-with-paths-longer-than-260-characters-on-windows)
-9.  [github](#github)
+8.  [github](#github)
    1.  [github on windows](#github-on-windows)
-
-
-
-
 
 
 
@@ -69,6 +57,13 @@
 **When your code is breaking at 2am**
 **Git will save you!**
 
+What have I changed?
+When did this happen?
+Who did this?
+Why is this like this?
+
+**gitman will save you!**
+
 /o/
  O
 ||
@@ -76,151 +71,190 @@ __Gitman!__
 
 
 
-# Senarios:
-
-1: What have I changed?
-2: When did this happen?
-3: Who did this?
-4: Why is this like this?
-
-
-
 # Often used Git commands
 
-## Clone into differently named folder
-git clone <git-repo.git> <fancy-new-folder>
+## git init
+to turn a project into a git repository:
+Have your shell in the projects root folder and use:
+    git init
+Thats it.
+
+Now you can use it locally with
+    git add <your-file>
+and
+    git commit -m "<your-commit-message>"
+
+If you ever want it on a remote repo like github then see the "git remote" headline :)
+
+## git clone
+To clone into differently named folder
+    git clone <git-repo-url>  <different-named-folder>
+
+notice that you can also clone from local repositories:
+    git clone <git-repo-path> <different-named-folder>
+
+if you want to make a local fake remote:
+    git clone --bare <git-repo-url> <fake-remote-folder>
 
 
 
-## To highlight words instead of lines with diff
-use
-git diff --word-diff <The-file>
+##  git status
+show status, but only shows folders that are not tracked:
+    git status
+
+Show status of files not yet tracked:
+    git status -u
 
 
 
-## Compare a file between 2 commits
-git diff <commit-id-1> <commit-id-2> <file-you-want-to-compare>
+## git reset
+To go back one local commit with files still being ready for commit
+    git reset --soft HEAD~1
+to also remove the staged files, use --hard instead
 
-
-
-## To create a new branch
-git checkout -b my_fancy_branch_name
-
-
-
-## To delete a remote branch
-git push origin -d branch-name.
-
-
-
-## To delete a local branch
-git branch -d old-branch.
-
-
-
-## To go back one local commit with files still being ready for commit
-git reset --soft HEAD~1
 If you then want the remote to also go back one commit then 
-git push -f
+    git push -f
 
 
 
-## When on feature branch rebase to sync it back up with master
-git pull origin master --rebase
-git push -f
+## git rebase
+When on feature branch rebase to sync it back up with master
+    git pull origin master --rebase
+    git push -f
 (If commits have been squashed then simply type “git rebase --continue” until you have skipped all your commits that are in fact in the squashed commit)
 
 
-## Find when file was added
-git log --diff-filter=A -- <your-file.txt>
+
+## git merge
+When on master how to merge a branch into master
+To tell git to fail and stop if everything is not 100% fine, add the fast forward only argument
+    git merge --ff-only <your-development-branch-name>
+
+
+
+## git submodule
+After pulling from a repo and it says “(new commits)”
+That is because the sub-modules are not automatically pulled when the main one is. Fix this with the command:
+    git submodule update --init --recursive
+
+
+
+## git diff
+To get the diff without having to scroll through it:
+    git -P diff <absolute path to file>
+This can also be handled permanently by git config
+
+To compare a file between 2 commits
+    git diff <commit-id-1> <commit-id-2> <file-you-want-to-compare>
+
+To find when file was added
+    git log --diff-filter=A -- <your-file.txt>
+
+To highlight words instead of lines with diff:
+    git diff --word-diff <The-file>
+
+
+
+## git log
+To look at last commit:
+    git log --name-status HEAD^..HEAD
+
+
+
+##  git tag
+To list all tags:
+    git tag -l *
+Note that you can modify the wildcard to be more specific.
+
+
+
+## git stash
+To temporarily hide your changes:
+    git stash
+and
+    git stash pop
+
+
+To see all saved stashes:
+    git stash list
+
+To delete all saved stashes:
+    git stash clear
+
+
+
+## git branch
+To get a list of all remote branches:
+    git branch -r
+
+To create a new branch
+    git checkout -b <branch-name>
+
+To delete a local branch
+    git branch -d <old-branch>
+
+To delete a remote branch
+    git push origin -d <branch-name>
+
+
+
+## git remote
+To see what remote you are pointing to
+    git remote -v
+
+To change what remote you are pointing to
+    git remote set-url origin <the-new-origin>
+
+if the repository never had a remote, ie, was created by
+    git init
+You first get the new remote url by creating the repository on the remote
+Then get the url you would normally clone it with
+Then use that url like so:
+    git remote add origin <repository-url>
+and then simply
+    git push
+which may prompt you to call
+    git push --set-upstream origin <your-branch-name>
+
+
+
+## git config
+To show the entire command reply instead of using the pager
+    git config --global core.pager "cat"
+This is equivalent to starting a command with “git -P”
+
+If you always want to use an argument in a command, you can automate that by using an alias
+an example of making an alias so
+    git df
+actually calls
+    git diff --word-diff
+
+git config --global alias.df "diff --word-diff"
+
+
+
+## Save command output to file
+
+    git blame file.name > output.txt
+
+    git log -p -- filename > output.txt
+
+
+
+
+
+# Weird git behavior and how to solve it
+
+## git cannot detect changes in file names between high and low case
+You poke git to detect it with
+    git mv <Source> <Destination> 
+for example:
+    git mv <my-lower-case-named-file> <my-upper-case-named-file>
 
 ## Restore empty working tree:
 git commit -m'for now'
 git checkout -f
 git reset --soft HEAD~1
-
-
-
-## git cannot detect changes in file names between high and low case
-You poke git to detect it with
-git mv <Source> <Destination> 
-
-
-
-## When on master how to merge a branch into master
-To ensure everything is 100% fine or the merge fails, we add the fast forward only argument
-git merge --ff-only <your-development-branch-name>
-
-
-
-## After pulling from a repo and it says “(new commits)”
-That is because the sub-modules are not automatically pulled when the main one is. Fix this with the command:
-git submodule update --init --recursive
-
-
-
-## To get the diff without having to scroll through it, use -P
-git -P diff <absolute path to file>
-
-
-
-## Look at last commit
-git log --name-status HEAD^..HEAD
-
-
-
-## If you want to save output of a command
-git blame file.name > output.txt
-
-git log -p -- filename > output.txt
-
-
-
-## List all tags
-git tag -l *
-Note that you can modify the wildcard to be more specific.
-
-
-
-## To temporarily hide your changes use
-git stash
-git stash pop
-
-# Interact with git stash'es
-To see all saved stashes:
-git stash list
-To delete all saved stashes
-git stash clear
-
-
-## show status, but only shows folders that are not tracked
-git status
-
-
-
-## Show status of files not yet tracked 
-git status -u
-
-
-
-## Get a list of all remote branches
-git branch -r
-
-
-
-## Show the entire command reply instead of using the pager
-git config --global core.pager "cat"
-This is equivalent to starting a command with “git -P”
-
-
-
-## To see what remote you are pointing to
-git remote -v
-
-
-
-## To change what remote you are pointing to
-git remote set-url origin THE_NEW_ORIGIN
 
 
 
@@ -242,8 +276,8 @@ so
 could be called like 
     git a-weird-command "/home/moose/Desktop/teaching_git/git notes.md"
 
-notice I put the path in quotations because it have 2 spaces.
-This is to avoid git thinkink it is 3 different argument
+notice I put the path in quotations because it have spaces.
+This is to avoid git thinking it is 3 different argument
 
 
 
@@ -354,7 +388,7 @@ git status
 
 Git considers files that are in the middle of being merged as being staged
 this means if you want to not accept incoming changes you can use
-git restore --staged YOUR_FILE
+    git restore --staged <your-file>
 to get rid of that file. Because git restore will not work.
 
 
