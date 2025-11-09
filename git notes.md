@@ -14,12 +14,12 @@
     7. [git submodule](#git-submodule)
     8. [git diff](#git-diff)
     9. [git log](#git-log)
-   10. [git tag](#git-tag)
-   11. [git stash](#git-stash)
-   12. [git branch](#git-branch)
-   13. [git remote](#git-remote)
-   14. [git config](#git-config)
-   15. [Save command output to file](#Save-command-output-to-file)
+    10. [git tag](#git-tag)
+    11. [git stash](#git-stash)
+    12. [git branch](#git-branch)
+    13. [git remote](#git-remote)
+    14. [git config](#git-config)
+    15. [Save command output to file](#Save-command-output-to-file)
  2. [Weird git behavior and how to solve it](#Weird-git-behavior-and-how-to-solve-it)
     1. [git cannot detect changes in file names between high and low case](#git-cannot-detect-changes-in-file-names-between-high-and-low-case)
     2. [Restore empty working tree](#Restore-empty-working-tree)
@@ -156,6 +156,16 @@ That is because the sub-modules are not automatically pulled when the main one i
 git submodule update --init --recursive  
 ```  
   
+To do the equivilent of "pull" for all submodules recursively:  
+```  
+git submodule update --remote
+```  
+
+To change a submodule to a branch 
+```  
+git config -f .gitmodules submodule.<submodule-name>.branch <name-of-a-branch> 
+```  
+
   
 ## git diff  
 To get the diff without having to scroll through it:  
@@ -376,17 +386,17 @@ git --help
 ## Pipe: <option-1> | <option-2> means use either  
 so a git command  
 ```  
-git weirdest-command --create-farbucket | --fill-bucket-with-fart  
+git weirdest-command --create-fartbucket | --fill-bucket-with-fart  
 ```  
 could be called like this:  
 ```  
-git weirdest-command --create-farbucket  
+git weirdest-command --create-fartbucket  
 ```  
 or like this:  
 ```  
 git weirdest-command --fill-bucket-with-fart  
 ```  
-  
+And would do the same thing
   
   
 ## Square brackets: [] means an optional thing  
