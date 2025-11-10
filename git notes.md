@@ -1,29 +1,30 @@
 
 
-
-
 # Table of Content:
 
  1. [Often used Git commands](#Often-used-Git-commands)
     1. [git init](#git-init)
     2. [git clone](#git-clone)
     3. [git status](#git-status)
-    4. [git reset](#git-reset)
-    5. [git rebase](#git-rebase)
-    6. [git merge](#git-merge)
-    7. [git submodule](#git-submodule)
-    8. [git diff](#git-diff)
-    9. [git log](#git-log)
-    10. [git tag](#git-tag)
-    11. [git stash](#git-stash)
-    12. [git branch](#git-branch)
-    13. [git remote](#git-remote)
-    14. [git config](#git-config)
-    15. [Save command output to file](#Save-command-output-to-file)
+    4. [git remote](#git-remote)
+    5. [git fetch](#git-fetch)
+    6. [git pull](#git-pull)
+    7. [git push](#git-push)
+    8. [git reset](#git-reset)
+    9. [git diff](#git-diff)
+   10. [git log](#git-log)
+   11. [git tag](#git-tag)
+   12. [git stash](#git-stash)
+   13. [git branch](#git-branch)
+   14. [git config](#git-config)
+   15. [git rebase](#git-rebase)
+   16. [git merge](#git-merge)
+   17. [git submodule](#git-submodule)
+   18. [Save command output to file](#Save-command-output-to-file)
  2. [Weird git behavior and how to solve it](#Weird-git-behavior-and-how-to-solve-it)
     1. [git cannot detect changes in file names between high and low case](#git-cannot-detect-changes-in-file-names-between-high-and-low-case)
     2. [Restore empty working tree](#Restore-empty-working-tree)
- 3. [Git help syntax](#Git-help-syntax)
+ 3. [Git help syntax explanation](#Git-help-syntax-explanation)
     1. [git commands are written in kebab case](#git-commands-are-written-in-kebab-case)
     2. [Angle brackets: <> means placeholder text](#Angle-brackets--means-placeholder-text)
     3. [Dash: -<a-letter> means single letter short form of an argument](#Dash--a-letter-means-single-letter-short-form-of-an-argument)
@@ -31,10 +32,12 @@
     5. [Pipe: <option-1> | <option-2> means use either](#Pipe-option-1--option-2-means-use-either)
     6. [Square brackets: [] means an optional thing](#Square-brackets--means-an-optional-thing)
     7. [double dashes alone: [--] means done with options](#double-dashes-alone----means-done-with-options)
- 4. [Git term Definitions](#Git-term-Definitions)
+ 4. [Git terms definitions](#Git-terms-definitions)
     1. [Repository](#Repository)
     2. [Workspace/working tree](#Workspaceworking-tree)
     3. [Index/Cache/Staging area](#IndexCacheStaging-area)
+    4. [Fast forward](#Fast-forward)
+    5. [origin/<branch>](#originbranch)
  5. [Merge conflicts tips](#Merge-conflicts-tips)
  6. [Basic workflow](#Basic-workflow)
     1. [Create a development branch](#Create-a-development-branch)
@@ -70,8 +73,14 @@ __Gitman!__
   
   
   
-# Often used Git commands  
   
+  
+# Often used Git commands  
+These are in an order so if you read from top to bottom you get all the info you need
+and will learn of the commands in the order where they are most useful  
+
+
+
 ## git init  
 to turn a project into a git repository:  
 Have your shell in the projects root folder and use:  
@@ -118,6 +127,80 @@ git status -u
 ```  
   
   
+## git remote  
+To see what remote you are pointing to  
+```  
+git remote -v  
+```  
+  
+To change what remote you are pointing to  
+```  
+git remote set-url origin <the-new-origin>  
+```  
+  
+if the repository never had a remote, ie, was created by  
+```  
+git init  
+```  
+  
+You first get the new remote url by creating the repository on the remote  
+Then get the url you would normally clone it with  
+Then use that url like so:  
+```  
+git remote add origin <repository-url>  
+```  
+and then simply  
+```  
+git push  
+```  
+which may prompt you to call  
+```  
+git push --set-upstream origin <your-branch-name>  
+```  
+  
+Remove a remote with  
+```  
+git remote remove origin  
+```  
+  
+  
+## git fetch  
+This commands gets the latest info from the remote WITHOUT changing your working tree  
+Can be really handy if you are confused about what is happening, especially followed by  
+git status  
+fetch NEVER changes anything, so it is always safe to use  
+  
+  
+## git pull  
+This calls fetch, and then it tries to take all the remotes changes and put them into  
+your local  
+If this can be fast forwarded, it will happen with no further input from you.  
+If it cannot, git will ask you what it should do.  
+  
+This is because git will NEVER do anything destructive without you telling it to.  
+Meaning that while commands may change things, you can ALWAYS get back to where you were.  
+But sometimes it is nessesary to use git pull in a destructive way. For example changing  
+past commits. Then you have to use the force flag like so:  
+```  
+git pull --force  
+```  
+or  
+```  
+git pull -f  
+```  
+  
+  
+## git push  
+This does the equivilient of the remote calling "git pull" on your local  
+  
+  
+If you are doing this to a central branch like main or master, you can ensure it  
+either goes well, or git aborts and do not do any changes by calling  
+```  
+git push --ff-only  
+```  
+  
+  
 ## git reset  
 To go back one local commit with files still being ready for commit  
 ```  
@@ -130,42 +213,6 @@ If you then want the remote to also go back one commit then
 git push -f  
 ```  
   
-  
-## git rebase  
-When on feature branch rebase to sync it back up with master  
-```  
-    git pull origin master --rebase  
-    git push -f  
-```  
-(If commits have been squashed then simply type “git rebase --continue” until you have skipped all your commits that are in fact in the squashed commit)  
-  
-  
-  
-## git merge  
-When on master how to merge a branch into master  
-To tell git to fail and stop if everything is not 100% fine, add the fast forward only argument  
-```  
-git merge --ff-only <your-development-branch-name>  
-```  
-  
-  
-## git submodule  
-After pulling from a repo and it says “(new commits)”  
-That is because the sub-modules are not automatically pulled when the main one is. Fix this with the command:  
-```  
-git submodule update --init --recursive  
-```  
-  
-To do the equivilent of "pull" for all submodules recursively:  
-```  
-git submodule update --remote
-```  
-
-To change a submodule to a branch 
-```  
-git config -f .gitmodules submodule.<submodule-name>.branch <name-of-a-branch> 
-```  
-
   
 ## git diff  
 To get the diff without having to scroll through it:  
@@ -251,40 +298,35 @@ git push origin -d <branch-name>
   
   
   
-## git remote  
-To see what remote you are pointing to  
-```  
-git remote -v  
-```  
-  
-To change what remote you are pointing to  
-```  
-git remote set-url origin <the-new-origin>  
-```  
-  
-if the repository never had a remote, ie, was created by  
-```  
-git init  
-```  
-  
-You first get the new remote url by creating the repository on the remote  
-Then get the url you would normally clone it with  
-Then use that url like so:  
-```  
-git remote add origin <repository-url>  
-```  
-and then simply  
-```  
-git push  
-```  
-which may prompt you to call  
-```  
-git push --set-upstream origin <your-branch-name>  
-```  
-  
   
   
 ## git config  
+git config interacts with the configuration of git.  
+There is a global configuration file and one for each repo  
+Local changes overrules global ones  
+  
+local configs is changed with  
+  
+git config <name-of-configuration> <what-to-set-configuration-to>  
+  
+and global with  
+  
+git config --global <name-of-configuration> <what-to-set-configuration-to>  
+  
+  
+The most normal setting to set is your name and email  
+that will show up in your git commits  
+These are set like so:  
+```  
+git config --global user.name <your-name>  
+```  
+and  
+```  
+git config --global user.email <your-email>  
+  
+```  
+  
+  
 To show the entire command reply instead of using the pager  
 ```  
 git config --global core.pager "cat"  
@@ -305,6 +347,41 @@ git diff --word-diff
 git config --global alias.df "diff --word-diff"  
 ```  
   
+  
+## git rebase  
+When on feature branch rebase to sync it back up with master  
+```  
+    git pull origin master --rebase  
+    git push -f  
+```  
+(If commits have been squashed then simply type “git rebase --continue” until you have skipped all your commits that are in fact in the squashed commit)  
+  
+  
+  
+## git merge  
+When on master how to merge a branch into master  
+To tell git to fail and stop if everything is not 100% fine, add the fast forward only argument  
+```  
+git merge --ff-only <your-development-branch-name>  
+```  
+  
+  
+## git submodule  
+After pulling from a repo and it says “(new commits)”  
+That is because the sub-modules are not automatically pulled when the main one is. Fix this with the command:  
+```  
+git submodule update --init --recursive  
+```  
+  
+To do the equivilent of "pull" for all submodules recursively:  
+```  
+git submodule update --remote  
+```  
+  
+To change a submodule to a branch  
+```  
+git config -f .gitmodules submodule.<submodule-name>.branch <name-of-a-branch>  
+```  
   
   
 ## Save command output to file  
@@ -341,7 +418,7 @@ git reset --soft HEAD~1
   
   
   
-# Git help syntax  
+# Git help syntax explanation  
   
 ## git commands are written in kebab case  
 Meaning replacing spaces with dashes  
@@ -396,7 +473,7 @@ or like this:
 ```  
 git weirdest-command --fill-bucket-with-fart  
 ```  
-And would do the same thing
+And would do the same thing  
   
   
 ## Square brackets: [] means an optional thing  
@@ -455,7 +532,7 @@ and it works! :D
   
   
   
-# Git term Definitions  
+# Git terms definitions  
   
 ## Repository  
   
@@ -491,7 +568,30 @@ It keeps track of the differences between last time you saved, and how the
 working tree is now. Every change, every new file, every file deleted.  
   
 You can think of it as the file git uses when you type  
+```    
 git status  
+```  
+  
+  
+## Fast forward  
+This refers to when you call  
+```  
+git pull  
+```  
+or  
+```  
+git push  
+```  
+And the only difference between the branch that is recieving changes and the branch  
+giving changes is that the giving branch have more commits.  
+Then git is able to merge the branches with "fast forward". Meaning easily without  
+changing any other commit in the branch  
+  
+  
+## origin/<branch>  
+"origin" means this is the remote your own local branch is pointing to  
+Note, as always, that this is how things looked last time git checked the remote  
+git is NOT permanently connected to the remote. Only when you ask it to update  
   
   
   
@@ -591,9 +691,6 @@ git pull origin <branch-you-want-to-update-maybe-master-or-main> --rebase
 git checkout <branch-you-want-to-update-maybe-master-or-main>  
 git merge --ff-only <your-branch-name>  
 ```  
-  
-  
-  
   
   
   
