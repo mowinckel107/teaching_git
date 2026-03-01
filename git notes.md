@@ -207,7 +207,8 @@ To go back one local commit with files still being ready for commit
 git reset --soft HEAD~1  
 ```  
 to also remove the staged files, use --hard instead  
-  
+(Note that any files not commited will be removed if you use --hard)  
+
 If you then want the remote to also go back one commit then  
 ```  
 git push -f  
@@ -275,6 +276,16 @@ git stash clear
 ```  
   
   
+You can also stash a single file
+```  
+git stash push <your-file-path>
+```  
+
+At this point it can be handy to see all the stashes you have with
+```  
+git stash list
+```  
+
 ## git branch  
 To get a list of all remote branches:  
 ```  
@@ -367,6 +378,16 @@ git merge --ff-only <your-development-branch-name>
   
   
 ## git submodule  
+
+
+to add a git submodule, run  
+```  
+git submodule add <repository_URL>
+```  
+
+to remove i
+
+
 After pulling from a repo and it says “(new commits)”  
 That is because the sub-modules are not automatically pulled when the main one is. Fix this with the command:  
 ```  
@@ -375,7 +396,7 @@ git submodule update --init --recursive
   
 To do the equivilent of "pull" for all submodules recursively:  
 ```  
-git submodule update --remote  
+git submodule update --remote
 ```  
   
 To change a submodule to a branch  
@@ -718,9 +739,10 @@ $MyPSexe = Get-Process -PID $PID | % Path
 Start-Process -Verb RunAs $MyPSexe "-c","Set-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem -Name LongPathsEnabled -Type DWord -Value 1"  
   
 Second thing is to set git to use it  
-in powershell, run this:  
+in powershell, run this:
+```
 Start-Process -Verb RunAs "git" "config","--system","core.longpaths","true"  
-  
+```
   
   
   
@@ -807,3 +829,18 @@ This info was found here: https://gist.github.com/bsara/5c4d90db3016814a3d2fe38d
   
   
 Now open up a new console, and git should work.  
+
+
+
+
+
+
+
+# git hooks
+
+
+
+
+
+
+
