@@ -360,12 +360,21 @@ git config --global alias.df "diff --word-diff"
   
   
 ## git rebase  
+rebasing a branch means changing what the base commit for the branch is
+
 When on feature branch rebase to sync it back up with master  
+(Both local branches)
+```  
+git rebase master
+```  
+
+If you are on the master branch and want to sync up with the remote master branch
 ```  
     git pull origin master --rebase  
     git push -f  
 ```  
-(If commits have been squashed then simply type “git rebase --continue” until you have skipped all your commits that are in fact in the squashed commit)  
+If commits have been squashed then simply type “git rebase --continue” until
+you have skipped all your commits that are in fact in the squashed commit)  
   
   
   
